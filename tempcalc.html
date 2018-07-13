@@ -1,0 +1,169 @@
+<html>
+   <head>
+        <style>
+              div.outer{
+                    width: 270px;
+                    height: 380px;
+                    border: 2px solid black;
+                    margin: auto;
+                    padding: 10px;
+                    padding-top: 30px;
+                    background-color: grey;
+          			    border-radius: 10px;
+              }
+              
+              div.inner2{
+                    padding-top: 20px;
+                    width: 250px;
+                    height: 310px;
+              }
+
+              input[type=text],input[type=button]{
+                    font-size: 22px;
+                    border-radius: 10px;
+              }
+              
+              .numbers,.operator{
+                    height: 50px;
+                    width: 62px;
+                    border-radius:10px;
+                    background-color: orange;
+                    border: none;
+              }
+
+              #screen{
+                    height: 80px;
+                    width: 268px;
+                    border: 2px solid black;               
+              }
+        </style>
+        <script>
+              var flag = false,error = false;
+              function displayval(val){
+                var lastchar = calculator.screen.value[calculator.screen.value.length-1];
+                /*if(val == "()" && obrace == false){
+                  calculator.screen.value += '(';
+                  obrace = true;
+                }
+                else if(val == "()" && obrace == true){
+                  calculator.screen.value += ')';
+                  obrace = true;
+                }
+                var lastchar = calculator.screen.value[calculator.screen.value.length-1];
+                if((lastchar == '.' || Number(lastchar)) && val == "()")
+                  alert("1Invalid expression!!");
+                //else if(Number(lastchar) && val == "()")
+                  //alert("2Invalid expression!!");
+                else if(!Number(lastchar) && val == "()" && obrace == true)
+                  alert("22Invalid expression!!");
+                else if(val == "()" && obrace == false){
+                  calculator.screen.value += '(';
+                  obrace = true;
+                }
+                else if(val == "()" && obrace == true){
+                  calculator.screen.value += ')';
+                  obrace = true;
+                }
+                else{
+                  if(!Number(lastchar) && val != "(" && val != ")" && !Number(val))
+                    alert("3Invalid expression!!");
+                  else if(Number(calculator.screen.value) && Number(val) && flag == true){
+                    //alert(val);*/
+                  if(Number(lastchar) && val == "("){
+                    calculator.screen.value += val;
+                    error = true;
+                  }
+                  else if((Number(calculator.screen.value) || Math.sign(calculator.screen.value) == "0" || Math.sign(calculator.screen.value) == -1) &&
+                       flag == true && (Number(val) || val == "." || Math.sign(val) == 0 || Math.sign(val) == -1)){
+                    calculator.screen.value = "";
+                    calculator.screen.value += val;
+                    flag = false;
+                  }
+                  else{
+                    calculator.screen.value += val;
+                    //alert(val);
+                  }
+                //}
+               }
+       
+              function clearScreen(){
+                calculator.screen.value = "";
+              }
+       
+              function calculate(){
+               /* if(Number(calculator.screen.value))
+                  alert("4Invalid expression!!");
+                //else if(!Number(lastchar) && !(lastchar == ")" || lastchar == "("))
+                  //alert("5Invalid expression!!");
+                else if(obrace == true)
+                  alert("6Invalid expression!!");
+                else{*/
+                try{
+                  if(error == true){
+                    throw (new SyntaxError());
+                    error = false;
+                   }
+                  calculator.screen.value = eval(calculator.screen.value);
+                  flag = true;
+                  //alert(error);
+                }
+                catch(e) {
+                  if (e instanceof SyntaxError) {
+                    alert("Invalid expression!!");
+                  }
+                }
+              }
+
+              function closewindow(){
+                var conf=confirm("Are you sure, you want to close the calculator?");
+                if(conf==true){
+                  window.close();
+                }
+              }
+
+     </script>
+  </head>
+  <body>
+       <div class="outer">
+       <form name="calculator">
+          <div class="inner1">
+            <input type="text" name="screen" id="screen" disabled>
+          </div>
+          <div class="inner2">
+          <table>
+            <tr>
+               <td><input type="button" name="one" value="1" class="numbers" onclick="displayval(this.value)"></td>
+               <td><input type="button" name="two" value="2" class="numbers" onclick="displayval(this.value)"></td>
+               <td><input type="button" name="three" value="3" class="numbers" onclick="displayval(this.value)"></td>
+               <td><input type="button" class="operator" name="plus" value="+"  onclick="displayval(this.value)"></td>
+            </tr>
+            <tr>
+               <td><input type="button" name="four" value="4" class="numbers" onclick="displayval(this.value)"></td>
+               <td><input type="button" name="five" value="5" class="numbers" onclick="displayval(this.value)"></td>
+               <td><input type="button" name="six" value="6" class="numbers" onclick="displayval(this.value)"></td>
+               <td><input type="button" class="operator" name="minus" value="-" onclick="displayval(this.value)"></td>
+            </tr>
+            <tr>
+               <td><input type="button" name="seven" value="7"  class="numbers"onclick="displayval(this.value)"></td>
+               <td><input type="button" name="eight" value="8" class="numbers" onclick="displayval(this.value)"></td>
+               <td><input type="button" name="nine" value="9" class="numbers" onclick="displayval(this.value)"></td>
+               <td><input type="button" class="operator" name="multiply" value="*" onclick="displayval(this.value)"></td>
+            </tr>
+            <tr>
+               <td><input type="button" name="decimal" value="." class="operator" onclick="displayval(this.value)"></td>
+               <td><input type="button" name="zero" value="0" class="numbers" onclick="displayval(this.value)"></td>
+               <td><input type="button" name="equals" class="operator" value="=" onclick="calculate()"></td>
+               <td><input type="button" class="operator"  name="divide" value="/" onclick="displayval(this.value)"></td>
+            </tr>
+            <tr>
+                <td><input type="button" id="clear" name="clear" value="C" class="operator" onclick="clearScreen()"></td>
+                <td><input type="button" name="openbrace" value="(" class="operator" onclick="displayval(this.value)"></td>
+                <td><input type="button" name="closebrace" class="operator" value=")" onclick="displayval(this.value)"></td>
+                <td><input type="button" class="operator"  name="modulus" value="%" onclick="displayval(this.value)"></td>
+            </tr>
+         </table>
+        </div>
+      </form>
+      </div>
+   </body>
+</html>
